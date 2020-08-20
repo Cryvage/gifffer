@@ -36,14 +36,14 @@ For accessibility reasons, instead of setting `alt` attribute on your image, you
 <img data-gifffer="image.gif" data-gifffer-alt="some alt description"/>
 ```
 
-The Gifffer function returns an array of nodes that could be used to simulate clicks. For Example:
+The Gifffer function returns an array of objects like {"element", "startPlaying", "stopPlaying", "togglePlaying", "restartPlaying"}, where "element" is node and others are functions to control the animation. For Example:
 
 ```js
 window.onload = function() {
   var gifs = Gifffer();
 
   setTimeout( function() {
-    gifs[0].click(); //will play the first gif
+    gifs[0].startPlaying(); //will play the first gif
   }, 1000);
 }
 ```
