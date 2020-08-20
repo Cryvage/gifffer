@@ -36,7 +36,7 @@ For accessibility reasons, instead of setting `alt` attribute on your image, you
 <img data-gifffer="image.gif" data-gifffer-alt="some alt description"/>
 ```
 
-The Gifffer function returns an array of objects like {"element", "startPlaying", "stopPlaying", "togglePlaying", "restartPlaying"}, where "element" is node and others are functions to control the animation. For Example:
+The Gifffer function returns an array of objects like {"element", "duration", "startPlaying", "stopPlaying", "togglePlaying", "restartPlaying"}, where "element" is HTML node, duration is value, passed by `data-gifffer-duration` parameter and others are functions to control the animation. For Example:
 
 ```js
 window.onload = function() {
@@ -117,6 +117,37 @@ Gifffer({
 
 That's about the *play* button. Note that if you decide to use `playButtonStyles` or `playButtonIconStyles` you have to provide the full style of the elements. For example providing only `{ top: '20px' }` property results in `top:20px;`.
 
+## Manage default click event
+
+By default, it is `togglePlaying` function added as onClick behaviour to all gifs. You may prevent this, by adding `isAddClickEvent: true` option.
+You also can add `preventClickHook(gif, isPlaying)` function to options to prevent click triggering according to custom logic. This function must return true to prevent click handling.
+You can add `beforeClickHook` and `afterClickHook` functions to options to execute some code before and after click handling respectively. 
+
+
+
+```
+Gifffer({
+  isAddClickEvent: true,
+  beforeClickHook: function(gif, isPlaying){
+    console.log("before click:")
+    console.log(gif)
+    console.log(isPlaying)
+  },
+  afterClickHook: function(gif, isPlaying){
+    console.log("after click:")
+    console.log(gif)
+    console.log(isPlaying)
+  },
+  preventClickHook: function(gif, isPlaying){
+    var result = Math.random() > 0.5
+    console.log("prevent click: " + result)
+    console.log(gif)
+    console.log(isPlaying)
+    return result
+  }
+});
+```
+                  
 ## How it works
 
 It replaces your `<img>` tag with newly generated `<div>` that contains only the first frame (roughly) of your animated Gif. It creates a *play* button on top of it and when the element is clicked it returns the original image.

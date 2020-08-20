@@ -96,6 +96,24 @@
                     'position': 'absolute',
                     'left': '26px',
                     'top': '16px'
+                  },
+                  isAddClickEvent: true,
+                  beforeClickHook: function(gif, isPlaying){
+                    console.log("before click:")
+                    console.log(gif)
+                    console.log(isPlaying)
+                  },
+                  afterClickHook: function(gif, isPlaying){
+                    console.log("after click:")
+                    console.log(gif)
+                    console.log(isPlaying)
+                  },
+                  preventClickHook: function(gif, isPlaying){
+                    var result = Math.random() > 0.5
+                    console.log("prevent click: " + result)
+                    console.log(gif)
+                    console.log(isPlaying)
+                    return result
                   }
                 });
             }
